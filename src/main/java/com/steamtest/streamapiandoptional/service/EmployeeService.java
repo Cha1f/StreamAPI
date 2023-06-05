@@ -6,19 +6,18 @@ import com.steamtest.streamapiandoptional.exceptions.EmployeeNotFoundException;
 import com.steamtest.streamapiandoptional.exceptions.EmployeeStorageIsFullException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EmployeeService {
+
     private static final int sizeLimit = 10;
     private final Map<String, Employee> employees = new HashMap<>(sizeLimit);
 
     public Collection<Employee> getAll() {
         return employees.values();
     }
-
+    
     public Employee add(Employee employee) {
         if (employees.size() >= sizeLimit) {
             throw new EmployeeStorageIsFullException();
@@ -49,4 +48,5 @@ public class EmployeeService {
     public static String createEmployee(String firstName, String lastName) {
         return (firstName + lastName).toLowerCase();
     }
+
 }
