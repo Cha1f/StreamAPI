@@ -4,6 +4,8 @@ import com.steamtest.streamapiandoptional.database.Employee;
 import com.steamtest.streamapiandoptional.exceptions.EmployeeAlreadyAddedException;
 import com.steamtest.streamapiandoptional.exceptions.EmployeeNotFoundException;
 import com.steamtest.streamapiandoptional.exceptions.EmployeeStorageIsFullException;
+import com.steamtest.streamapiandoptional.exceptions.WrongDataException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -19,6 +21,9 @@ public class EmployeeService {
     }
     
     public Employee add(Employee employee) {
+        if (!StringUtils.isAlpha(employee.getFirstName()) || !StringUtils.isAlpha(employee.getLastName())) {
+            throw new WrongDataException();
+        }
         if (employees.size() >= sizeLimit) {
             throw new EmployeeStorageIsFullException();
         }
