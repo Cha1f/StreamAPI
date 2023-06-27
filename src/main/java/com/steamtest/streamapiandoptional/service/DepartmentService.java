@@ -1,7 +1,7 @@
 package com.steamtest.streamapiandoptional.service;
 
 import com.steamtest.streamapiandoptional.database.Employee;
-import org.springframework.stereotype.Indexed;
+import com.steamtest.streamapiandoptional.exceptions.EmployeeNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -17,18 +17,27 @@ public class DepartmentService {
         this.employeeService = employeeService;
     }
 
-    public Employee getEmployeeWithMaxSalary(int department) {
+    public double getSumSalaryByDepartment(int department) {
         return employeeService.getAll().stream()
                 .filter(e -> e.getDepartment() == department)
-                .max(Comparator.comparingDouble(Employee::getSalary))
-                .orElse(null);
+                .mapToDouble(Employee::getSalary)
+                .sum();
     }
 
-    public Employee getEmployeeWithMinSalary(int department) {
+    public double getEmployeeWithMaxSalary(int department) {
         return employeeService.getAll().stream()
                 .filter(e -> e.getDepartment() == department)
-                .min(Comparator.comparingDouble(Employee::getSalary))
-                .orElse(null);
+                .mapToDouble(Employee::getSalary)
+                .max()
+                .orElseThrow(EmployeeNotFoundException::new);
+    }
+
+    public double getEmployeeWithMinSalary(int department) {
+        return employeeService.getAll().stream()
+                .filter(e -> e.getDepartment() == department)
+                .mapToDouble(Employee::getSalary)
+                .min()
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 
     public List<Employee> getEmployeeByDepartment(int department) {

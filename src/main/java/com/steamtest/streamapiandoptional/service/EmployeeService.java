@@ -16,10 +16,11 @@ public class EmployeeService {
     private static final int sizeLimit = 10;
     private final Map<String, Employee> employees = new HashMap<>(sizeLimit);
 
+
     public Collection<Employee> getAll() {
         return employees.values();
     }
-    
+
     public Employee add(Employee employee) {
         if (!StringUtils.isAlpha(employee.getFirstName()) || !StringUtils.isAlpha(employee.getLastName())) {
             throw new WrongDataException();

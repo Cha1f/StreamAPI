@@ -2,10 +2,7 @@ package com.steamtest.streamapiandoptional.employeecontroller;
 
 import com.steamtest.streamapiandoptional.database.Employee;
 import com.steamtest.streamapiandoptional.service.DepartmentService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -19,14 +16,18 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
+    @GetMapping("/sum")
+    public double getSum(@RequestParam("departmentId") int department) {
+        return departmentService.getSumSalaryByDepartment(department);
+    }
+
     @GetMapping("/max-salary")
-    public Employee getMax(@RequestParam("departmentId") int department) {
+    public double getMax(@RequestParam("departmentId") int department) {
         return departmentService.getEmployeeWithMaxSalary(department);
     }
 
-
     @GetMapping("/min-salary")
-    public Employee getMin(@RequestParam("departmentId") int department) {
+    public double getMin(@RequestParam("departmentId") int department) {
         return departmentService.getEmployeeWithMinSalary(department);
     }
 
