@@ -4,6 +4,7 @@ import com.steamtest.streamapiandoptional.database.Employee;
 import com.steamtest.streamapiandoptional.exceptions.EmployeeAlreadyAddedException;
 import com.steamtest.streamapiandoptional.exceptions.EmployeeNotFoundException;
 import com.steamtest.streamapiandoptional.exceptions.EmployeeStorageIsFullException;
+import com.steamtest.streamapiandoptional.exceptions.WrongDataException;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
@@ -48,9 +49,8 @@ public class EmployeeServiceTest {
 
     @Test
     void whenEmployeesMaxInListBrokeException() {
-        for (int i = 0; i < 10; i++) {
-            Employee e1 = new Employee("name " + i, "lastName " + i, 1, 10);
-
+        for (int i = 0; i < 5; i++) {
+            Employee e1 = new Employee("ivan" + i, "ivanov" +i, 1, 2000);
             assertDoesNotThrow(() -> employeeService.add(e1));
         }
 

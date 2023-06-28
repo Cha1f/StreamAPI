@@ -13,7 +13,7 @@ import java.util.*;
 @Service
 public class EmployeeService {
 
-    private static final int sizeLimit = 10;
+    private static final int sizeLimit = 5;
     private final Map<String, Employee> employees = new HashMap<>(sizeLimit);
 
 
@@ -22,9 +22,6 @@ public class EmployeeService {
     }
 
     public Employee add(Employee employee) {
-        if (!StringUtils.isAlpha(employee.getFirstName()) || !StringUtils.isAlpha(employee.getLastName())) {
-            throw new WrongDataException();
-        }
         if (employees.size() >= sizeLimit) {
             throw new EmployeeStorageIsFullException();
         }
