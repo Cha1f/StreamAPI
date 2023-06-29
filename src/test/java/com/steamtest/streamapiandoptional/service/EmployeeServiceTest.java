@@ -49,10 +49,17 @@ public class EmployeeServiceTest {
 
     @Test
     void whenEmployeesMaxInListBrokeException() {
-        for (int i = 0; i < 5; i++) {
-            Employee e1 = new Employee("ivan" + i, "ivanov" +i, 1, 2000);
-            assertDoesNotThrow(() -> employeeService.add(e1));
-        }
+        Employee e1 = new Employee("ivan", "ivanov", 1, 2000);
+        employeeService.add(e1);
+        Employee e2 = new Employee("petya", "petrov", 1, 3000);
+        employeeService.add(e2);
+        Employee e3 = new Employee("olya", "ivanova", 2, 4000);
+        employeeService.add(e3);
+        Employee e4 = new Employee("masha", "petrova", 2, 5000);
+        employeeService.add(e4);
+        Employee e5 = new Employee("lesha", "alekseev", 6, 2000);
+        employeeService.add(e5);
+        assertDoesNotThrow(() -> employeeService.getAll().size());
 
         assertThrows(EmployeeStorageIsFullException.class,
                 () -> employeeService.add(new Employee("dima", "pervov", 4, 40000.0)));
