@@ -4,22 +4,27 @@ import com.steamtest.streamapiandoptional.database.Employee;
 import com.steamtest.streamapiandoptional.exceptions.EmployeeAlreadyAddedException;
 import com.steamtest.streamapiandoptional.exceptions.EmployeeNotFoundException;
 import com.steamtest.streamapiandoptional.exceptions.EmployeeStorageIsFullException;
+import com.steamtest.streamapiandoptional.exceptions.WrongDataException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EmployeeService {
-    private static final int sizeLimit = 10;
+
+    private static final int sizeLimit = 5;
     private final Map<String, Employee> employees = new HashMap<>(sizeLimit);
+
 
     public Collection<Employee> getAll() {
         return employees.values();
     }
 
     public Employee add(Employee employee) {
+        if (!StringUtils.isAlpha(employee.getFirstName()) || !StringUtils.isAlpha(employee.getLastName())) {
+            throw new WrongDataException();
+        }
         if (employees.size() >= sizeLimit) {
             throw new EmployeeStorageIsFullException();
         }
@@ -49,4 +54,5 @@ public class EmployeeService {
     public static String createEmployee(String firstName, String lastName) {
         return (firstName + lastName).toLowerCase();
     }
+
 }
